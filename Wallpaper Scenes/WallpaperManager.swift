@@ -119,6 +119,25 @@ class WallpaperManager: ObservableObject {
         }
     }
     
+    func deleteWallpaper(_ wallpaper: WallpaperImage) {
+        // 1) Remove from array
+        if let idx = images.firstIndex(of: wallpaper) {
+            images.remove(at: idx)
+        }
+
+        // 2) Optionally remove the file from disk
+        let fileURL = imagesFolderURL.appendingPathComponent(wallpaper.fileName)
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch {
+            print("Failed to delete file: \(error.localizedDescription)")
+        }
+
+        // 3) Save updated list
+        saveData()
+    }
+
+    
     func loadNSImage(for wallpaper: WallpaperImage) -> NSImage? {
         let url = imagesFolderURL.appendingPathComponent(wallpaper.fileName)
         return NSImage(contentsOf: url)
@@ -161,7 +180,7 @@ class WallpaperManager: ObservableObject {
         }
     }
 
-    private func saveData() {
+    func saveData() {
         let savedData = SavedData(images: images, scenes: scenes)
         do {
             let data = try JSONEncoder().encode(savedData)

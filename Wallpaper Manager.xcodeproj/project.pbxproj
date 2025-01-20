@@ -16,6 +16,7 @@
 		B9E3BBEE2D3DC90E0066CB51 /* SceneEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBED2D3DC90E0066CB51 /* SceneEditor.swift */; };
 		B9E3BBF02D3DD7700066CB51 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBEF2D3DD7700066CB51 /* LibraryView.swift */; };
 		B9E3BBF22D3DD77E0066CB51 /* ImportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBF12D3DD77E0066CB51 /* ImportSheet.swift */; };
+		B9E3BBF42D3E36FC0066CB51 /* CreateSceneSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBF32D3E36FC0066CB51 /* CreateSceneSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B9E3BBED2D3DC90E0066CB51 /* SceneEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneEditor.swift; sourceTree = "<group>"; };
 		B9E3BBEF2D3DD7700066CB51 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		B9E3BBF12D3DD77E0066CB51 /* ImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSheet.swift; sourceTree = "<group>"; };
+		B9E3BBF32D3E36FC0066CB51 /* CreateSceneSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSceneSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				B9E3BBE32D3DC5AA0066CB51 /* Wallpaper_ScenesApp.swift */,
 				B9E3BBE92D3DC74D0066CB51 /* WallpaperManager.swift */,
 				B9E3BBEF2D3DD7700066CB51 /* LibraryView.swift */,
+				B9E3BBF32D3E36FC0066CB51 /* CreateSceneSheet.swift */,
 				B9E3BBF12D3DD77E0066CB51 /* ImportSheet.swift */,
 				B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */,
 				B9E3BBEB2D3DC8FD0066CB51 /* DisplayDetailView.swift */,
@@ -161,6 +164,7 @@
 				B9E3BBEA2D3DC74D0066CB51 /* WallpaperManager.swift in Sources */,
 				B9E3BBEC2D3DC8FD0066CB51 /* DisplayDetailView.swift in Sources */,
 				B9E3BBEE2D3DC90E0066CB51 /* SceneEditor.swift in Sources */,
+				B9E3BBF42D3E36FC0066CB51 /* CreateSceneSheet.swift in Sources */,
 				B9E3BBF22D3DD77E0066CB51 /* ImportSheet.swift in Sources */,
 				B9E3BBF02D3DD7700066CB51 /* LibraryView.swift in Sources */,
 				B9E3BBE82D3DC5AA0066CB51 /* Wallpaper_ScenesApp.swift in Sources */,
