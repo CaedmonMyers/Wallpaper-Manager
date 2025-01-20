@@ -11,10 +11,13 @@
 import SwiftUI
 
 @main
-struct Wallpaper_ScenesApp: App {
+struct WallpaperManagerApp: App {
+    @StateObject private var wallpaperManager = WallpaperManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(wallpaperManager)
         }
     }
 }
