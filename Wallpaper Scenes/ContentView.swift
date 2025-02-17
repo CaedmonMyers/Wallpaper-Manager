@@ -12,6 +12,7 @@ import AppKit
 
 /// The types of items selectable in the sidebar.
 enum SidebarSelection: Hashable, Equatable {
+    case library
     case display(CGDirectDisplayID)
     case scene(UUID)
 }
@@ -20,7 +21,7 @@ struct MainView: View {
     @EnvironmentObject var manager: WallpaperManager
 
     // Track which item is currently selected in the sidebar
-    @State private var selection: SidebarSelection? = nil
+    @State private var selection: SidebarSelection? = .library // Default to Library
 
     // For importing an image into the library
     @State private var isImportingImage = false
@@ -31,28 +32,26 @@ struct MainView: View {
         } detail: {
             detailView
         }
-//        .fileImporter(
-//            isPresented: $isImportingImage,
-//            allowedContentTypes: [.image],
-//            allowsMultipleSelection: false
-//        ) { result in
-//            handleImageImport(result: result)
-//        }
     }
 
     // MARK: - Sidebar
 
     private var sidebar: some View {
         List(selection: $selection) {
+            Button("Delete All Scenes") {
+                manager.deleteAllScenes()
+            }
+            .foregroundColor(.red)
+
+            
             Section("Library") {
-                NavigationLink("All Wallpapers") {
-                    LibraryView()
+                NavigationLink(value: SidebarSelection.library) {
+                    Text("All Wallpapers")
                 }
             }
-            
+
             Section(header: Text("Displays")) {
-                let screens = manager.getConnectedDisplays()
-                ForEach(screens, id: \.self) { screen in
+                ForEach(manager.displays, id: \.self) { screen in
                     if let screenID = manager.displayID(for: screen) {
                         NavigationLink(value: SidebarSelection.display(screenID)) {
                             Text("Display \(screenID): \(screen.localizedName)")
@@ -70,13 +69,6 @@ struct MainView: View {
             }
         }
         .listStyle(.sidebar)
-//        .toolbar {
-//            Button {
-//                isImportingImage = true
-//            } label: {
-//                Label("Import Image", systemImage: "plus")
-//            }
-//        }
         .navigationTitle("Wallpaper Manager")
     }
 
@@ -85,21 +77,13 @@ struct MainView: View {
     @ViewBuilder
     private var detailView: some View {
         switch selection {
-        case .none:
-            // Nothing selected – just a placeholder.
-            Text("Select a display or scene from the sidebar.")
-                .font(.title2)
-                .foregroundColor(.secondary)
+        case .none, .library:
+            LibraryView()
         case .display(let screenID):
-            // Show a detail editor for a single display
-            if let screen = manager.getConnectedDisplays().first(where: {
+            if let screen = manager.displays.first(where: {
                 manager.displayID(for: $0) == screenID
             }) {
-                DisplayDetailView(screen: screen)
-            } else {
-                Text("This display is not currently connected.")
-                    .font(.title2)
-                    .foregroundColor(.secondary)
+                DisplayDetailView(screen: screen, screenNumber: Int(screenID))
             }
         case .scene(let sceneID):
             // Show an editor for this scene
@@ -112,17 +96,4 @@ struct MainView: View {
             }
         }
     }
-
-    // MARK: - File Import Helper
-
-//    private func handleImageImport(result: Result<[URL], Error>) {
-//        switch result {
-//        case .success(let urls):
-//            if let url = urls.first {
-//                manager.addImage(from: url)
-//            }
-//        case .failure(let error):
-//            print("Import error: \(error.localizedDescription)")
-//        }
-//    }
 }

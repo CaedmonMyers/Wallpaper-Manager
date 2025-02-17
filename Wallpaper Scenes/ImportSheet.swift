@@ -101,8 +101,12 @@ struct ImportWallpaperSheetView: View {
             allowsMultipleSelection: false
         ) { result in
             switch result {
-            case .success(let url):
-                selectedFileURL = url.first
+            case .success(let urls):
+                if let selectedURL = urls.first {
+                    DispatchQueue.main.async {
+                        manager.addImage(from: selectedURL, displayName: selectedURL.lastPathComponent, groups: [])
+                    }
+                }
             case .failure(let error):
                 print("File importer error: \(error.localizedDescription)")
             }

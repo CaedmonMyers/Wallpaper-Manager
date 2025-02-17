@@ -26,20 +26,9 @@ struct LibraryView: View {
             HStack {
                 // Custom group filter drop-down
                 VStack(alignment: .leading, spacing: 4) {
-                    
-//                    Button {
-//                        // Toggle the drop-down open/closed
-//                        withAnimation {
-//                            isGroupDropdownOpen.toggle()
-//                        }
-//                    } label: {
-//                        Text("Groups ▾")
-//                    }
-//                    .buttonStyle(.link)
                     LazyVGrid(
                         columns: [
                             GridItem(.adaptive(minimum: 75, maximum: 120), spacing: 16)
-//                            GridItem(.fixed(120), spacing: 16)
                         ],
                         spacing: 16
                     ) {
@@ -68,35 +57,6 @@ struct LibraryView: View {
                             }
                             .buttonStyle(.plain)
                         }
-                    }
-
-                    if isGroupDropdownOpen {
-                        // A list of all groups with checkmarks if selected
-                        VStack(alignment: .leading, spacing: 4) {
-                            ForEach(allGroups, id: \.self) { group in
-                                Button {
-                                    toggleGroupFilter(group)
-                                } label: {
-                                    HStack {
-                                        if selectedGroups.contains(group) {
-                                            Image(systemName: "checkmark")
-                                        } else {
-                                            Image(systemName: "circle")
-                                                .opacity(0.2)
-                                        }
-                                        Text(group)
-                                    }
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                        .padding(8)
-                        .background(Color(NSColor.windowBackgroundColor))
-                        .cornerRadius(4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.secondary, lineWidth: 1)
-                        )
                     }
                 }
 
