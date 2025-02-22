@@ -20,6 +20,11 @@ struct SceneEditorView: View {
             }
             
             Toggle("Set This Wallpaper On All Desktops?", isOn: $scene.setForAllDesktops)
+            
+            if scene.setForAllDesktops {
+                Text("This will make your computer switch spaces quickly and become unresponsive for several seconds. This is due to a macOS limitation. It also only supports a maximum of 16 spaces.")
+                Text("You must have the Switch to Desktop keyboard shortcuts enabled in System Settings > Keyboard > Shortcuts for this feature to work.")
+            }
 
             Divider()
 
