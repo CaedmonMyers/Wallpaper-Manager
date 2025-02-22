@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import Darwin
 
 // MARK: - WallpaperImage
 
@@ -151,7 +152,7 @@ class WallpaperManager: ObservableObject {
                     let url = self.imagesFolderURL.appendingPathComponent(wallpaperImage.fileName)
                     
                     if scene.setForAllDesktops {
-                        // Use AppleScript to set across *all* spaces
+                        // Use private API to set across *all* spaces on this display
                         self.setWallpaperForAllSpaces(url: url, display: screen)
                     } else {
                         // Use the standard “current desktop” call
@@ -162,29 +163,39 @@ class WallpaperManager: ObservableObject {
         }
     }
 
-    /// Sets wallpaper for *all* spaces on a given display using AppleScript.
-    private func setWallpaperForAllSpaces(url: URL, display: NSScreen) {
-        let displayName = display.localizedName
-        let pathString = url.path
+    private func _CGSDefaultConnection() -> UInt32 {
+            return CGSMainConnectionID()
+        }
 
-        // AppleScript command to set the wallpaper on all desktops for the given display
-        let source = """
-        tell application \"System Events\"
-            set allDesktops to every desktop whose display name is \"\(displayName)\"
-            repeat with d in allDesktops
-                set picture of d to \"\(pathString)\"
-            end repeat
-        end tell
-        """
+        private func setWallpaperForAllSpaces(url: URL, display: NSScreen) {
+            let connection = _CGSDefaultConnection()
+            guard let displayID = self.displayID(for: display) else { return }
+            guard let spacesArray = CGSCopyManagedDisplaySpaces(connection) as? [[String: Any]] else {
+                print("Failed to get Spaces using SkyLight.")
+                return
+            }
 
-        var error: NSDictionary?
-        if let scriptObject = NSAppleScript(source: source) {
-            scriptObject.executeAndReturnError(&error)
-            if let error = error {
-                print("Failed to set wallpaper for all desktops: \(error)")
+            // Loop through spaces and set wallpaper
+            for displaySpaces in spacesArray {
+                if let managedDisplayID = displaySpaces["Display Identifier"] as? String,
+                   managedDisplayID.contains(String(displayID)) {
+
+                    if let spaces = displaySpaces["Spaces"] as? [[String: Any]] {
+                        for space in spaces {
+                            if let spaceID = space["id64"] as? Int64 {
+                                let imageURL = url as CFURL
+                                let result = CGSSetDesktopImageURL(connection, spaceID, imageURL, [:] as CFDictionary)
+                                if result != 0 {
+                                    print("Failed to set wallpaper for space \(spaceID) on display \(display.localizedName)")
+                                } else {
+                                    print("Successfully set wallpaper for space \(spaceID) on display \(display.localizedName)")
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
 
 
     // MARK: - Add image (copy file + store record)
@@ -204,7 +215,7 @@ class WallpaperManager: ObservableObject {
 
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let data = try Data(contentsOf: sourceURL) // **This line was failing before**
+                let data = try Data(contentsOf: sourceURL)
                 try data.write(to: destinationURL)
 
                 DispatchQueue.main.async {
@@ -223,7 +234,6 @@ class WallpaperManager: ObservableObject {
             }
         }
     }
-
 
     // MARK: - Delete wallpaper
     func deleteWallpaper(_ wallpaper: WallpaperImage) {
@@ -269,7 +279,6 @@ class WallpaperManager: ObservableObject {
             DispatchQueue.main.async {
                 self.images = decoded.images
                 self.scenes = decoded.scenes
-                // Now that the images array is updated, preload the images:
                 self.preloadImagesInBackground()
             }
         } catch {
@@ -292,10 +301,9 @@ class WallpaperManager: ObservableObject {
     func deleteAllScenes() {
         DispatchQueue.main.async {
             self.scenes.removeAll()
-            self.saveData() // Save immediately so the JSON file updates
+            self.saveData()
         }
     }
-
 
     // MARK: - Display Helpers
 
@@ -307,7 +315,7 @@ class WallpaperManager: ObservableObject {
         return screenID
     }
 
-    /// Example “get current wallpaper fileName,” if you track it in `scenes.first`.
+    /// Example get current wallpaper fileName
     func getCurrentWallpaperFileName(for screen: NSScreen) -> String? {
         guard let screenID = displayID(for: screen) else { return nil }
         if let imageID = scenes.first?.assignments["\(screenID)"],
@@ -317,3 +325,39 @@ class WallpaperManager: ObservableObject {
         return nil
     }
 }
+
+
+class SkyLightLoader {
+    static let shared = SkyLightLoader()
+    private var handle: UnsafeMutableRawPointer?
+
+    private init() {
+        handle = dlopen("/System/Library/PrivateFrameworks/SkyLight.framework/SkyLight", RTLD_LAZY)
+        if handle == nil {
+            fatalError("Failed to load SkyLight framework.")
+        }
+    }
+
+    func loadSymbol<T>(_ symbolName: String, as type: T.Type) -> T {
+        guard let symbol = dlsym(handle, symbolName) else {
+            fatalError("Symbol \(symbolName) not found in SkyLight.")
+        }
+        return unsafeBitCast(symbol, to: type)
+    }
+
+    deinit {
+        if let handle = handle {
+            dlclose(handle)
+        }
+    }
+}
+
+// MARK: - SkyLight Function Declarations
+
+typealias CGSCopyManagedDisplaySpacesFunc = @convention(c) (UInt32) -> CFArray?
+typealias CGSSetDesktopImageURLFunc = @convention(c) (UInt32, Int64, CFURL, CFDictionary) -> Int32
+typealias CGSMainConnectionIDFunc = @convention(c) () -> UInt32
+
+let CGSCopyManagedDisplaySpaces: CGSCopyManagedDisplaySpacesFunc = SkyLightLoader.shared.loadSymbol("CGSCopyManagedDisplaySpaces", as: CGSCopyManagedDisplaySpacesFunc.self)
+let CGSSetDesktopImageURL: CGSSetDesktopImageURLFunc = SkyLightLoader.shared.loadSymbol("CGSSetDesktopImageURL", as: CGSSetDesktopImageURLFunc.self)
+let CGSMainConnectionID: CGSMainConnectionIDFunc = SkyLightLoader.shared.loadSymbol("CGSMainConnectionID", as: CGSMainConnectionIDFunc.self)

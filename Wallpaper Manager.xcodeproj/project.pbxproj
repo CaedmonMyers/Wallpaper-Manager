@@ -21,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		B95896DB2D6921D400108FFC /* Wallpaper-Manager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Wallpaper-Manager-Info.plist"; sourceTree = "<group>"; };
+		B95896DC2D6980AC00108FFC /* SkyLightBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkyLightBridge.h; sourceTree = "<group>"; };
 		B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wallpaper Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		B9E3BBE42D3DC5AA0066CB51 /* Wallpaper Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				B95896DC2D6980AC00108FFC /* SkyLightBridge.h */,
 				B9E3BBE22D3DC5AA0066CB51 /* Wallpaper_Scenes.entitlements */,
 				B9E3BBE32D3DC5AA0066CB51 /* Wallpaper_ScenesApp.swift */,
 				B9E3BBE92D3DC74D0066CB51 /* WallpaperManager.swift */,
@@ -307,19 +309,27 @@
 				DEVELOPMENT_TEAM = 47J6H2LHDD;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = /System/Library/PrivateFrameworks;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Wallpaper-Manager-Info.plist";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "$(PRODUCT_NAME) needs to control System Events to set wallpapers.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SkyLight,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.doorhingeapps.WallpaperManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Wallpaper Scenes/SkyLightBridge.h";
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = /System/Library/PrivateFrameworks;
 			};
 			name = Debug;
 		};
@@ -336,19 +346,27 @@
 				DEVELOPMENT_TEAM = 47J6H2LHDD;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = /System/Library/PrivateFrameworks;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Wallpaper-Manager-Info.plist";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "$(PRODUCT_NAME) needs to control System Events to set wallpapers.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SkyLight,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.doorhingeapps.WallpaperManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Wallpaper Scenes/SkyLightBridge.h";
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = /System/Library/PrivateFrameworks;
 			};
 			name = Release;
 		};
