@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B95896DF2D69895500108FFC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = B95896DE2D69895500108FFC /* SQLite */; };
 		B9E3BBE52D3DC5AA0066CB51 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */; };
 		B9E3BBE62D3DC5AA0066CB51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */; };
 		B9E3BBE72D3DC5AA0066CB51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B95896DF2D69895500108FFC /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +108,7 @@
 			);
 			name = "Wallpaper Manager";
 			packageProductDependencies = (
+				B95896DE2D69895500108FFC /* SQLite */,
 			);
 			productName = "Wallpaper Scenes";
 			productReference = B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */;
@@ -135,6 +138,9 @@
 			);
 			mainGroup = B9E3BBC32D3DC59F0066CB51;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B95896DD2D69895500108FFC /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9E3BBCD2D3DC59F0066CB51 /* Products */;
 			projectDirPath = "";
@@ -374,6 +380,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B95896DD2D69895500108FFC /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B95896DE2D69895500108FFC /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B95896DD2D69895500108FFC /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9E3BBC42D3DC59F0066CB51 /* Project object */;
 }

@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import SQLite
 
 // MARK: - WallpaperImage
 
@@ -152,7 +153,7 @@ class WallpaperManager: ObservableObject {
                     
                     if scene.setForAllDesktops {
                         // Use AppleScript to set across *all* spaces
-                        self.setWallpaperForAllSpaces(url: url, display: screen)
+                        self.setWallpaperForAllSpacesViaDB(imagePath: url.path)
                     } else {
                         // Use the standard “current desktop” call
                         self.setWallpaper(wallpaperImage, for: screen)
@@ -162,18 +163,103 @@ class WallpaperManager: ObservableObject {
         }
     }
 
-    /// Sets wallpaper for *all* spaces on a given display using AppleScript.
-    private func setWallpaperForAllSpaces(url: URL, display: NSScreen) {
-        let displayName = display.localizedName
-        let pathString = url.path
+    func setWallpaperForAllSpacesViaDB(imagePath: String) {
+            do {
+                // 1) Build path to the DB in ~/Library/Application Support/Dock/
+                let homeDirURL = FileManager.default.homeDirectoryForCurrentUser
+                let dbPath = homeDirURL
+                    .appendingPathComponent("Library")
+                    .appendingPathComponent("Application Support")
+                    .appendingPathComponent("Dock")
+                    .appendingPathComponent("desktoppicture.db").path
 
-        // AppleScript command to set the wallpaper on all desktops for the given display
+                // 2) Ensure the file to be set actually exists
+                guard FileManager.default.fileExists(atPath: imagePath) else {
+                    print("Error: File does not exist at path \(imagePath)")
+                    return
+                }
+
+                // 3) Open the DB
+                let db = try Connection(dbPath)
+
+                // 4) Insert or find a row in the data table for this image path
+                let dataId = try insertOrFindDataRow(db: db, imagePath: imagePath)
+
+                // 5) Reset preferences to point them all to dataId
+                try resetPreferences(db: db, dataId: dataId)
+
+                // 6) Restart Dock to see changes
+                try restartDock()
+
+            } catch {
+                print("Error in setWallpaperForAllSpacesViaDB: \(error)")
+            }
+        }
+
+        /// Return the rowid in `data` for the given path, inserting if needed.
+    private func insertOrFindDataRow(db: Connection, imagePath: String) throws -> Int64 {
+        let dataTable = Table("data")
+        let valueColumn = SQLite.Expression<String?>("value") // Change from "path" to "value"
+
+        var foundRowId: Int64 = 0
+
+        // Update your raw SQL query to select from 'value' instead of 'path'
+        for row in try db.prepare("SELECT rowid, value FROM data") {
+            let rowId = row[0] as? Int64
+            let existingPath = row[1] as? String
+            if existingPath == imagePath {
+                foundRowId = rowId ?? 0
+                break
+            }
+        }
+
+        // Insert new record if not found
+        if foundRowId == 0 {
+            foundRowId = try db.run(dataTable.insert(valueColumn <- imagePath))
+        }
+        return foundRowId
+    }
+
+
+
+        /// Clears out `preferences` and re-inserts one row per `pictures` entry, all pointing to `dataId`.
+        private func resetPreferences(db: Connection, dataId: Int64) throws {
+            // We want to wipe out all existing preferences, then re-insert them so everything
+            // references the same dataId. On Big Sur and later, the `pictures` table often has
+            // one row per display or space, so we re-use that count for how many preference rows to add.
+            let picturesTable = Table("pictures")
+            let preferencesTable = Table("preferences")
+
+            // columns in preferences
+            let keyCol = SQLite.Expression<Int>("key")          // typically 1
+            let dataIdCol = SQLite.Expression<Int64>("data_id") // which wallpaper row in `data`
+            let pictureIdCol = SQLite.Expression<Int64>("picture_id")
+
+            try db.transaction {
+                // remove everything from preferences
+                try db.run(preferencesTable.delete())
+
+                // Insert new references in the preferences table
+                var index = 1
+                for _ in try db.prepare(picturesTable) {
+                    try db.run(preferencesTable.insert(
+                        keyCol <- 1,
+                        dataIdCol <- dataId,
+                        pictureIdCol <- Int64(index)
+                    ))
+                    index += 1
+                }
+            }
+        }
+
+        /// Tells the Dock to restart, applying the new wallpaper settings immediately.
+    private func restartDock() throws {
         let source = """
-        tell application \"System Events\"
-            set allDesktops to every desktop whose display name is \"\(displayName)\"
-            repeat with d in allDesktops
-                set picture of d to \"\(pathString)\"
-            end repeat
+        tell application "System Events"
+            delay 0.5
+            tell application "Dock" to quit
+            delay 0.5
+            tell application "Dock" to activate
         end tell
         """
 
@@ -181,10 +267,11 @@ class WallpaperManager: ObservableObject {
         if let scriptObject = NSAppleScript(source: source) {
             scriptObject.executeAndReturnError(&error)
             if let error = error {
-                print("Failed to set wallpaper for all desktops: \(error)")
+                print("AppleScript error restarting Dock: \(error)")
             }
         }
     }
+
 
 
     // MARK: - Add image (copy file + store record)
