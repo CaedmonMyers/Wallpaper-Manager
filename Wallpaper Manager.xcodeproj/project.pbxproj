@@ -20,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B95896DB2D6921D400108FFC /* Wallpaper-Manager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Wallpaper-Manager-Info.plist"; sourceTree = "<group>"; };
 		B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wallpaper Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		B9E3BBC32D3DC59F0066CB51 = {
 			isa = PBXGroup;
 			children = (
+				B95896DB2D6921D400108FFC /* Wallpaper-Manager-Info.plist */,
 				B9E3BBE42D3DC5AA0066CB51 /* Wallpaper Scenes */,
 				B9E3BBCD2D3DC59F0066CB51 /* Products */,
 			);
@@ -306,6 +308,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Wallpaper-Manager-Info.plist";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "$(PRODUCT_NAME) needs to control System Events to set wallpapers.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -333,6 +337,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Wallpaper-Manager-Info.plist";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "$(PRODUCT_NAME) needs to control System Events to set wallpapers.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

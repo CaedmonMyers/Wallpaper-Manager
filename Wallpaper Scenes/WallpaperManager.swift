@@ -164,18 +164,15 @@ class WallpaperManager: ObservableObject {
 
     /// Sets wallpaper for *all* spaces on a given display using AppleScript.
     private func setWallpaperForAllSpaces(url: URL, display: NSScreen) {
-        // We'll match on the display's local name in AppleScript.
         let displayName = display.localizedName
         let pathString = url.path
-        
-        // AppleScript snippet:
-        // 1) get all desktops whose "display" property matches `displayName`
-        // 2) set that desktop's picture property to `pathString`
+
+        // AppleScript command to set the wallpaper on all desktops for the given display
         let source = """
-        tell application "System Events"
-            set theDesktops to a reference to every desktop whose display name is "\(displayName)"
-            repeat with d in theDesktops
-                set picture of d to "\(pathString)"
+        tell application \"System Events\"
+            set allDesktops to every desktop whose display name is \"\(displayName)\"
+            repeat with d in allDesktops
+                set picture of d to \"\(pathString)\"
             end repeat
         end tell
         """
@@ -184,7 +181,7 @@ class WallpaperManager: ObservableObject {
         if let scriptObject = NSAppleScript(source: source) {
             scriptObject.executeAndReturnError(&error)
             if let error = error {
-                print("Failed to set wallpaper for all spaces: \(error)")
+                print("Failed to set wallpaper for all desktops: \(error)")
             }
         }
     }
