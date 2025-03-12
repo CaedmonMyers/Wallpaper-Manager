@@ -5,6 +5,7 @@ import AppKit
 
 struct DisplayDetailView: View {
     @EnvironmentObject var manager: WallpaperManager
+    @EnvironmentObject var backgroundManager: BackgroundManager
     let screen: NSScreen
 
     @State private var selectedWallpaperID: UUID?
@@ -64,6 +65,13 @@ struct DisplayDetailView: View {
     private func setWallpaper(_ wallpaper: WallpaperImage) {
         selectedWallpaperID = wallpaper.id
         manager.setWallpaper(wallpaper, for: screen)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Load the NSImage from the selected wallpaper
+            if let image = manager.loadNSImage(for: wallpaper) {
+                backgroundManager.updateColors(with: image)
+            }
+        }
     }
 }
 

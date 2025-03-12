@@ -1,0 +1,15 @@
+{
+  "originHash" : "cff7f896045b426902c6661f483a7fc4432a077e05792ffc5f8a00f018b24f68",
+  "pins" : [
+    {
+      "identity" : "swift-colorskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/owlcoding/Swift-ColorsKit/",
+      "state" : {
+        "branch" : "main",
+        "revision" : "cb27434e84269fd89d229d001cb88fa90905ae4d"
+      }
+    }
+  ],
+  "version" : 3
+}

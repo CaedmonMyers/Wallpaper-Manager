@@ -70,6 +70,9 @@ struct MainView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("Wallpaper Manager")
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
+        .listRowBackground(Color.clear)
     }
 
     // MARK: - Detail

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B99C5C602D7B88E900DE4E86 /* BackgroundAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C5C5F2D7B88E900DE4E86 /* BackgroundAnimation.swift */; };
+		B99C5C622D7B89BA00DE4E86 /* hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C5C612D7B89BA00DE4E86 /* hex.swift */; };
+		B99EDB2C2D8137BC000EA72E /* Palette Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EDB2B2D8137BC000EA72E /* Palette Generator.swift */; };
+		B99EDB2F2D813820000EA72E /* ColorsKit in Frameworks */ = {isa = PBXBuildFile; productRef = B99EDB2E2D813820000EA72E /* ColorsKit */; };
+		B99EDB312D813820000EA72E /* Swift-ColorExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = B99EDB302D813820000EA72E /* Swift-ColorExtensions */; };
+		B99EDB332D813820000EA72E /* Swift-ColorPalettes in Frameworks */ = {isa = PBXBuildFile; productRef = B99EDB322D813820000EA72E /* Swift-ColorPalettes */; };
+		B99EDB362D813B55000EA72E /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EDB352D813B55000EA72E /* BackgroundManager.swift */; };
 		B9E3BBE52D3DC5AA0066CB51 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */; };
 		B9E3BBE62D3DC5AA0066CB51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */; };
 		B9E3BBE72D3DC5AA0066CB51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */; };
@@ -21,6 +28,10 @@
 
 /* Begin PBXFileReference section */
 		B95896DB2D6921D400108FFC /* Wallpaper-Manager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Wallpaper-Manager-Info.plist"; sourceTree = "<group>"; };
+		B99C5C5F2D7B88E900DE4E86 /* BackgroundAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAnimation.swift; sourceTree = "<group>"; };
+		B99C5C612D7B89BA00DE4E86 /* hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hex.swift; sourceTree = "<group>"; };
+		B99EDB2B2D8137BC000EA72E /* Palette Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Palette Generator.swift"; sourceTree = "<group>"; };
+		B99EDB352D813B55000EA72E /* BackgroundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundManager.swift; sourceTree = "<group>"; };
 		B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wallpaper Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,12 +51,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99EDB332D813820000EA72E /* Swift-ColorPalettes in Frameworks */,
+				B99EDB312D813820000EA72E /* Swift-ColorExtensions in Frameworks */,
+				B99EDB2F2D813820000EA72E /* ColorsKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B99EDB342D813B49000EA72E /* BackgroundManager */ = {
+			isa = PBXGroup;
+			children = (
+				B99EDB352D813B55000EA72E /* BackgroundManager.swift */,
+				B99C5C5F2D7B88E900DE4E86 /* BackgroundAnimation.swift */,
+				B99EDB2B2D8137BC000EA72E /* Palette Generator.swift */,
+			);
+			path = BackgroundManager;
+			sourceTree = "<group>";
+		};
 		B9E3BBC32D3DC59F0066CB51 = {
 			isa = PBXGroup;
 			children = (
@@ -81,8 +105,10 @@
 				B9E3BBF32D3E36FC0066CB51 /* CreateSceneSheet.swift */,
 				B9E3BBF12D3DD77E0066CB51 /* ImportSheet.swift */,
 				B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */,
+				B99EDB342D813B49000EA72E /* BackgroundManager */,
 				B9E3BBEB2D3DC8FD0066CB51 /* DisplayDetailView.swift */,
 				B9E3BBED2D3DC90E0066CB51 /* SceneEditor.swift */,
+				B99C5C612D7B89BA00DE4E86 /* hex.swift */,
 				B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */,
 				B9E3BBDF2D3DC5AA0066CB51 /* Preview Content */,
 			);
@@ -106,6 +132,9 @@
 			);
 			name = "Wallpaper Manager";
 			packageProductDependencies = (
+				B99EDB2E2D813820000EA72E /* ColorsKit */,
+				B99EDB302D813820000EA72E /* Swift-ColorExtensions */,
+				B99EDB322D813820000EA72E /* Swift-ColorPalettes */,
 			);
 			productName = "Wallpaper Scenes";
 			productReference = B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */;
@@ -135,6 +164,9 @@
 			);
 			mainGroup = B9E3BBC32D3DC59F0066CB51;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B99EDB2D2D813820000EA72E /* XCRemoteSwiftPackageReference "Swift-ColorsKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9E3BBCD2D3DC59F0066CB51 /* Products */;
 			projectDirPath = "";
@@ -165,10 +197,14 @@
 				B9E3BBE72D3DC5AA0066CB51 /* ContentView.swift in Sources */,
 				B9E3BBEA2D3DC74D0066CB51 /* WallpaperManager.swift in Sources */,
 				B9E3BBEC2D3DC8FD0066CB51 /* DisplayDetailView.swift in Sources */,
+				B99C5C622D7B89BA00DE4E86 /* hex.swift in Sources */,
 				B9E3BBEE2D3DC90E0066CB51 /* SceneEditor.swift in Sources */,
 				B9E3BBF42D3E36FC0066CB51 /* CreateSceneSheet.swift in Sources */,
+				B99C5C602D7B88E900DE4E86 /* BackgroundAnimation.swift in Sources */,
 				B9E3BBF22D3DD77E0066CB51 /* ImportSheet.swift in Sources */,
 				B9E3BBF02D3DD7700066CB51 /* LibraryView.swift in Sources */,
+				B99EDB362D813B55000EA72E /* BackgroundManager.swift in Sources */,
+				B99EDB2C2D8137BC000EA72E /* Palette Generator.swift in Sources */,
 				B9E3BBE82D3DC5AA0066CB51 /* Wallpaper_ScenesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +410,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B99EDB2D2D813820000EA72E /* XCRemoteSwiftPackageReference "Swift-ColorsKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/owlcoding/Swift-ColorsKit/";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B99EDB2E2D813820000EA72E /* ColorsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B99EDB2D2D813820000EA72E /* XCRemoteSwiftPackageReference "Swift-ColorsKit" */;
+			productName = ColorsKit;
+		};
+		B99EDB302D813820000EA72E /* Swift-ColorExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B99EDB2D2D813820000EA72E /* XCRemoteSwiftPackageReference "Swift-ColorsKit" */;
+			productName = "Swift-ColorExtensions";
+		};
+		B99EDB322D813820000EA72E /* Swift-ColorPalettes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B99EDB2D2D813820000EA72E /* XCRemoteSwiftPackageReference "Swift-ColorsKit" */;
+			productName = "Swift-ColorPalettes";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9E3BBC42D3DC59F0066CB51 /* Project object */;
 }
