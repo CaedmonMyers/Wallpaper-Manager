@@ -9,13 +9,18 @@
 
 
 import SwiftUI
-import ColorsKit
 
 class BackgroundManager: ObservableObject {
+//    @Published var colors: [Color] = [
+//        Color.white, Color.white, Color.white,
+//        Color.white, Color.white, Color.white,
+//        Color.white, Color.white, Color.white
+//    ]
+    
     @Published var colors: [Color] = [
-        Color.white, Color.white, Color.white,
-        Color.white, Color.white, Color.white,
-        Color.white, Color.white, Color.white
+        Color(hex: "EA96FF"), .purple, .indigo,
+        Color(hex: "FAE8FF"), Color(hex: "F1C0FD"), Color(hex: "A6A6D6"),
+        .indigo, .purple, Color(hex: "EA96FF")
     ]
     
     func updateColors(with image: NSImage) {

@@ -30,9 +30,28 @@ struct WallpaperManagerApp: App {
                 BackgroundAnimation()
                     .ignoresSafeArea()
                     .environmentObject(backgroundManager)
+                    //.opacity(0.5)
+            }.onAppear() {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let image = getMainDisplayWallpaper() {
+                        DispatchQueue.main.async {
+                            backgroundManager.updateColors(with: image)
+                        }
+                    }
+                }
             }
         }
         // Remove or customize the title bar / window style if desired
         .windowStyle(HiddenTitleBarWindowStyle())
     }
+}
+
+
+func getMainDisplayWallpaper() -> NSImage? {
+    guard let screen = NSScreen.main,
+          let wallpaperURL = NSWorkspace.shared.desktopImageURL(for: screen),
+          let image = NSImage(contentsOf: wallpaperURL) else {
+        return nil
+    }
+    return image
 }

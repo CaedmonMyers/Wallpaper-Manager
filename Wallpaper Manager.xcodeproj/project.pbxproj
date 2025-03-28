@@ -14,6 +14,7 @@
 		B99EDB312D813820000EA72E /* Swift-ColorExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = B99EDB302D813820000EA72E /* Swift-ColorExtensions */; };
 		B99EDB332D813820000EA72E /* Swift-ColorPalettes in Frameworks */ = {isa = PBXBuildFile; productRef = B99EDB322D813820000EA72E /* Swift-ColorPalettes */; };
 		B99EDB362D813B55000EA72E /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EDB352D813B55000EA72E /* BackgroundManager.swift */; };
+		B99EDB392D82148A000EA72E /* WallpaperStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EDB382D82148A000EA72E /* WallpaperStudio.swift */; };
 		B9E3BBE52D3DC5AA0066CB51 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */; };
 		B9E3BBE62D3DC5AA0066CB51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */; };
 		B9E3BBE72D3DC5AA0066CB51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */; };
@@ -32,6 +33,7 @@
 		B99C5C612D7B89BA00DE4E86 /* hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hex.swift; sourceTree = "<group>"; };
 		B99EDB2B2D8137BC000EA72E /* Palette Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Palette Generator.swift"; sourceTree = "<group>"; };
 		B99EDB352D813B55000EA72E /* BackgroundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundManager.swift; sourceTree = "<group>"; };
+		B99EDB382D82148A000EA72E /* WallpaperStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperStudio.swift; sourceTree = "<group>"; };
 		B9E3BBCC2D3DC59F0066CB51 /* Wallpaper Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wallpaper Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E3BBDE2D3DC5AA0066CB51 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B9E3BBE02D3DC5AA0066CB51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +72,14 @@
 			path = BackgroundManager;
 			sourceTree = "<group>";
 		};
+		B99EDB372D821477000EA72E /* Studio */ = {
+			isa = PBXGroup;
+			children = (
+				B99EDB382D82148A000EA72E /* WallpaperStudio.swift */,
+			);
+			path = Studio;
+			sourceTree = "<group>";
+		};
 		B9E3BBC32D3DC59F0066CB51 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 				B9E3BBF32D3E36FC0066CB51 /* CreateSceneSheet.swift */,
 				B9E3BBF12D3DD77E0066CB51 /* ImportSheet.swift */,
 				B9E3BBE12D3DC5AA0066CB51 /* ContentView.swift */,
+				B99EDB372D821477000EA72E /* Studio */,
 				B99EDB342D813B49000EA72E /* BackgroundManager */,
 				B9E3BBEB2D3DC8FD0066CB51 /* DisplayDetailView.swift */,
 				B9E3BBED2D3DC90E0066CB51 /* SceneEditor.swift */,
@@ -196,6 +207,7 @@
 			files = (
 				B9E3BBE72D3DC5AA0066CB51 /* ContentView.swift in Sources */,
 				B9E3BBEA2D3DC74D0066CB51 /* WallpaperManager.swift in Sources */,
+				B99EDB392D82148A000EA72E /* WallpaperStudio.swift in Sources */,
 				B9E3BBEC2D3DC8FD0066CB51 /* DisplayDetailView.swift in Sources */,
 				B99C5C622D7B89BA00DE4E86 /* hex.swift in Sources */,
 				B9E3BBEE2D3DC90E0066CB51 /* SceneEditor.swift in Sources */,

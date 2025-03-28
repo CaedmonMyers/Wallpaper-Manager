@@ -71,7 +71,7 @@ struct LibraryView: View {
                 }
             }
             .padding()
-            .background(Color(NSColor.windowBackgroundColor))
+//            .background(Color(NSColor.windowBackgroundColor))
 
             Divider()
 

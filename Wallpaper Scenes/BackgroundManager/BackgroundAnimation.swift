@@ -9,7 +9,6 @@
 
 
 import SwiftUI
-import ColorsKit
 
 struct BackgroundAnimation: View {
     @EnvironmentObject var backgroundManager: BackgroundManager
@@ -37,15 +36,15 @@ struct BackgroundAnimation: View {
                 backgroundManager.colors.shuffle()
             }
         }
-        .onAppear() {
-            withAnimation(.linear(duration: 5)) {
-                backgroundManager.colors = [
-                    Color(hex: "EA96FF"), .purple, .indigo,
-                    Color(hex: "FAE8FF"), Color(hex: "F1C0FD"), Color(hex: "A6A6D6"),
-                    .indigo, .purple, Color(hex: "EA96FF")
-                ]
-            }
-        }
+//        .onAppear() {
+//            withAnimation(.linear(duration: 5)) {
+//                backgroundManager.colors = [
+//                    Color(hex: "EA96FF"), .purple, .indigo,
+//                    Color(hex: "FAE8FF"), Color(hex: "F1C0FD"), Color(hex: "A6A6D6"),
+//                    .indigo, .purple, Color(hex: "EA96FF")
+//                ]
+//            }
+//        }
     }
 }
 
