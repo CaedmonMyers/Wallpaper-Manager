@@ -4,6 +4,7 @@ import AppKit
 
 struct LibraryView: View {
     @EnvironmentObject var manager: WallpaperManager
+    @EnvironmentObject var backgroundManager: BackgroundManager
 
     // Groups filter – which groups are currently selected?
     @State private var selectedGroups: Set<String> = []
@@ -71,7 +72,6 @@ struct LibraryView: View {
                 }
             }
             .padding()
-//            .background(Color(NSColor.windowBackgroundColor))
 
             Divider()
 
@@ -85,15 +85,23 @@ struct LibraryView: View {
                 ) {
                     ForEach(filteredWallpapers) { wallpaper in
                         LibraryItemView(wallpaper: wallpaper)
+                            .contextMenu {
+                                ForEach(manager.displays, id: \.localizedName) { screen in
+                                    Button {
+                                        manager.setWallpaper(wallpaper, for: screen)
+                                        DispatchQueue.global(qos: .userInitiated).async {
+                                            if let image = manager.loadNSImage(for: wallpaper) {
+                                                backgroundManager.updateColors(with: image)
+                                            }
+                                        }
+                                    } label: {
+                                        Text(screen.localizedName)
+                                    }
+                                }
+                            }
                     }
                 }
                 .padding()
-            }
-            .onDrop(
-                of: [.fileURL],
-                isTargeted: $isDropTargeted
-            ) { providers in
-                handleDrop(providers: providers)
             }
         }
         // Import sheet
@@ -107,8 +115,7 @@ struct LibraryView: View {
                 .environmentObject(manager)
         }
         .overlay(
-            // Optional highlight overlay while dragging
-            isDropTargeted ? Color.accentColor.opacity(0.15) : Color.clear
+            isDropTargeted ? Color(.systemBlue).opacity(0.15) : Color.clear
         )
     }
 

@@ -60,7 +60,7 @@ class WallpaperManager: ObservableObject {
     @Published var displays: [NSScreen] = []
 
     // For storing images on disk
-    private let imagesFolderURL: URL
+    let imagesFolderURL: URL
     private let dataFileURL: URL
 
     // In-memory NSImage cache for faster UI
@@ -131,7 +131,7 @@ class WallpaperManager: ObservableObject {
 
     // MARK: - Preload all images to cache (async)
 
-    private func preloadImagesInBackground() {
+    func preloadImagesInBackground() {
         DispatchQueue.global(qos: .userInitiated).async {
             var newCache: [UUID: NSImage] = [:]
             for wallpaper in self.images {
